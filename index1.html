@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CRUD</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style type="text/css">
+    body {
+        color: #404E67;
+        background: #F5F7FA;
+  font-family: 'Open Sans', sans-serif;
+ }
+ .table-wrapper {
+  width: 4033px;
+  margin: 30px auto;
+        background: #fff;
+        padding: 20px;
+        box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    }
+    .table-title {
+        padding-bottom: 10px;
+        margin: 0 0 10px;
+    }
+    .table-title h2 {
+        margin: 6px 0 0;
+        font-size: 22px;
+    }
+    .table-title .add-new {
+        float: right;
+  height: 30px;
+  font-weight: bold;
+  font-size: 12px;
+  text-shadow: none;
+  min-width: 100px;
+  border-radius: 50px;
+  line-height: 13px;
+    }
+ .table-title .add-new i {
+  margin-right: 4px;
+ }
+    table.table {
+        table-layout: fixed;
+    }
+    table.table tr th, table.table tr td {
+        border-color: #e9e9e9;
+    }
+    table.table th i {
+        font-size: 13px;
+        margin: 0 5px;
+        cursor: pointer;
+    }
+    table.table th:last-child {
+        width: 100px;
+    }
+    table.table td a {
+  cursor: pointer;
+        display: inline-block;
+        margin: 0 5px;
+  min-width: 24px;
+    }
+ table.table td a.add {
+        color: #27C46B;
+    }
+    table.table td a.edit {
+        color: #FFC107;
+    }
+    table.table td a.delete {
+        color: #E34724;
+    }
+    table.table td i {
+        font-size: 19px;
+    }
+ table.table td a.add i {
+        font-size: 24px;
+     margin-right: -1px;
+        position: relative;
+        top: 3px;
+    }
+    table.table .form-control {
+        height: 32px;
+        line-height: 32px;
+        box-shadow: none;
+        border-radius: 2px;
+    }
+ table.table .form-control.error {
+  border-color: #f50000;
+ }
+ table.table td .add {
+  display: none;
+ }
+</style>
+<script type="text/javascript">
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+    var actions = $("table td:last-child").html();
+    // Append table with add row form on add new button click
+    $(".add-new").click(function(){
+        $(this).attr("disabled", "disabled");
+        var index = $("table tbody tr:last-child").index();
+        var row = '<tr>' +
+            '<td><input type="text" class="form-control" name="fio" id="txtfio"></td>' +
+            '<td><input type="text" class="form-control" name="gender" id="txtgender"></td>' +
+            '<td><input type="text" class="form-control" name="birthday" id="txtbirthday"></td>' +
+            '<td><input type="text" class="form-control" name="title" id="txttitle"></td>' +
+            '<td><input type="text" class="form-control" name="department" id="txtdepartment"></td>' +
+            '<td><input type="text" class="form-control" name="education" id="txteducation"></td>' +
+            '<td><input type="text" class="form-control" name="experience" id="txtexperience"></td>' +
+            '<td><input type="text" class="form-control" name="NumberofP" id="txtnumberofp"></td>' +
+            '<td><input type="text" class="form-control" name="email" id="txtemail"></td>' +
+            '<td><input type="text" class="form-control" name="countofP" id="txtcountofp"></td>' +
+            '<td><input type="text" class="form-control" name="division" id="txtdivision"></td>' +
+            '<td><input type="text" class="form-control" name="programm" id="txtprogramm"></td>' +
+            '<td><input type="text" class="form-control" name="dateofstart" id="txtdateofstart"></td>' +
+            '<td><input type="text" class="form-control" name="dateoffinish" id="txtdateoffinish"></td>' +
+            '<td><input type="text" class="form-control" name="timetable" id="txttimetable"></td>' +
+            '<td><input type="text" class="form-control" name="countofh" id="txtcountofh"></td>' +
+            '<td><input type="text" class="form-control" name="post" id="txtpost"></td>' +
+        '<td>' + actions + '</td>' +
+        '</tr>';
+        $("table").append(row);
+        $("table tbody tr").eq(index + 1).find(".add, .edit, .delete").toggle();
+        $('[data-toggle="tooltip"]').tooltip();
+
+    });
+    $(document).on("click", ".add", function(){
+        var empty = false;
+        var input = $(this).parents("tr").find('input[type="text"]');
+        input.each(function(){
+            if(!$(this).val()){
+                $(this).addClass("error");
+                empty = true;
+            } else{
+                $(this).removeClass("error");
+            }
+        });
+        var txtfio = $("#txtfio").val();
+        var txtgender = $("#txtgender").val();
+        var txtbirthday = $("#txtbirthday").val();
+        var txttitle = $("#txttitle").val();
+        var txtdepartment = $("#txtdepartment").val();
+        var txteducation = $("#txteducation").val();
+        var txtexperience = $("#txtexperience").val();
+        var txtnumberofp = $("#txtnumberofp").val();
+        var txtemail = $("#txtemail").val();
+        var txtcountofp = $("#txtcountofp").val();
+        var txtdivision = $("#txtdivision").val();
+        var txtprogramm = $("#txtprogramm").val();
+        var txtdateofstart = $("#txtdateofstart").val();
+        var txtdateoffinish = $("#txtdateoffinish").val();
+        var txttimetable = $("#txttimetable").val();
+        var txtcountofh = $("#txtcountofh").val();
+        var txtpost = $("#txtpost").val();
+        $.post("/ajax_add", { txtfio: txtfio, txtgender: txtgender, txtbirthday: txtbirthday, txttitle: txttitle, txtdepartment: txtdepartment, txteducation: txteducation, txtexperience: txtexperience, txtnumberofp: txtnumberofp, txtemail: txtemail, txtcountofp: txtcountofp, txtdivision: txtdivision, txtprogramm: txtprogramm, txtdateofstart: txtdateofstart, txtdateoffinish: txtdateoffinish, txttimetable: txttimetable, txtcountofh: txtcountofh, txtpost: txtpost}, function(data) {
+            $("#displaymessage").html(data);
+            $("#displaymessage").show();
+        $(this).parents("tr").find(".error").first().focus();
+        if(!empty){
+            input.each(function(){
+                $(this).parent("td").html($(this).val());
+            });
+            $(this).parents("tr").find(".add, .edit").toggle();
+            $(".add-new").removeAttr("disabled");
+        }
+        });
+
+    });
+    // Edit row on edit button click
+        $(document).on("click", ".edit", function(){
+            $(this).parents("tr").find("td:not(:last-child)").each(function(i){
+                if (i=='0'){
+                    var idname = 'txtfio';
+                }else if (i=='1'){
+                    var idname = 'txtgender';
+                }else if (i=='2'){
+                    var idname = 'txtbirthday';
+                }else if (i=='3'){
+                    var idname = 'txttitle';
+                }else if (i=='4'){
+                    var idname = 'txtdepartment';
+                }else if (i=='5'){
+                    var idname = 'txteducation';
+                }else if (i=='6'){
+                    var idname = 'txtexperience';
+                }else if (i=='7'){
+                    var idname = 'txtnumberofp';
+                }else if (i=='8'){
+                    var idname = 'txtemail';
+                }else if (i=='9'){
+                    var idname = 'txtcountofp';
+                }else if (i=='10'){
+                    var idname = 'txtdivision';
+                }else if (i=='11'){
+                    var idname = 'txtprogramm';
+                }else if (i=='12'){
+                    var idname = 'txtdateofstart';
+                }else if (i=='13'){
+                    var idname = 'txtdateoffinish';
+                }else if (i=='14'){
+                    var idname = 'txttimetable';
+                }else if (i=='15'){
+                    var idname = 'txtcountofh';
+                }else if (i=='16'){
+                    var idname = 'txtpost';
+                }else{}
+                $(this).html('<input type="text" name="updaterec" id="' + idname + '" class="form-control" value="' + $(this).text() + '">');
+            });
+            $(this).parents("tr").find(".add, .edit").toggle();
+            $(".add-new").attr("disabled", "disabled");
+            $(this).parents("tr").find(".add").removeClass("add").addClass("update");
+        });
+        $(document).on("click", ".update", function(){
+            var id = $(this).attr("id");
+            var string = id;
+            var txtfio = $("#txtfio").val();
+            var txtgender = $("#txtgender").val();
+            var txtbirthday = $("#txtbirthday").val();
+            var txttitle = $("#txttitle").val();
+            var txtdepartment = $("#txtdepartment").val();
+            var txteducation = $("#txteducation").val();
+            var txtexperience = $("#txtexperience").val();
+            var txtnumberofp = $("#txtnumberofp").val();
+            var txtemail = $("#txtemail").val();
+            var txtcountofp = $("#txtcountofp").val();
+            var txtdivision = $("#txtdivision").val();
+            var txtprogramm = $("#txtprogramm").val();
+            var txtdateofstart = $("#txtdateofstart").val();
+            var txtdateoffinish = $("#txtdateoffinish").val();
+            var txttimetable = $("#txttimetable").val();
+            var txtcountofh = $("#txtcountofh").val();
+            var txtpost = $("#txtpost").val();
+            $.post("/ajax_update", { string: string,txtfio: txtfio, txtgender: txtgender, txtbirthday: txtbirthday, txttitle: txttitle, txtdepartment: txtdepartment, txteducation: txteducation, txtexperience: txtexperience, txtnumberofp: txtnumberofp, txtemail: txtemail, txtcountofp: txtcountofp, txtdivision: txtdivision, txtprogramm: txtprogramm, txtdateofstart: txtdateofstart, txtdateoffinish: txtdateoffinish, txttimetable: txttimetable, txtcountofh: txtcountofh, txtpost: txtpost}, function(data) {
+                $("#displaymessage").html(data);
+                $("#displaymessage").show();
+            });
+        });
+        // Delete row on delete button click
+    $(document).on("click", ".delete", function(){
+        $(this).parents("tr").remove();
+        $(".add-new").removeAttr("disabled");
+        var id = $(this).attr("id");
+        var string = id;
+        $.post("/ajax_delete", { string: string}, function(data) {
+            $("#displaymessage").html(data);
+            $("#displaymessage").show();
+        });
+    });
+
+});
+</script>
+</head>
+<body>
+<div class="container"><p><h1 align="center">CRUD приложение для работы с базой данных</h1></p>
+  <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-8"><h2>Преподаватель</h2></div>
+                    <div class="col-sm-4">
+                        <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Добавить преподавателя</button>
+                    </div>
+                    <div class='btn btn-info' id="displaymessage" style="display:none;width:100%;margin-top:10px;"></div>
+                  </div>
+              </div>
+      <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ФИО</th>
+                        <th>Пол</th>
+                        <th>Дата_рождения</th>
+                        <th>Звание</th>
+                        <th>Кафедра</th>
+                        <th>Образование</th>
+                        <th>Опыт</th>
+                        <th>Номер_телефона</th>
+                        <th>Почта</th>
+                        <th>Кол-во_человек</th>
+                        <th>Подразделение</th>
+                        <th>Программа</th>
+                        <th>Дата_начала</th>
+                        <th>Дата_окончания</th>
+                        <th>Расписание</th>
+                        <th>Кол-часов</th>
+                        <th>Должность</th>
+                        <th>Операции</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in teacher %}
+                    <tr>
+                        <td>{{row.1}}</td>
+                        <td>{{row.2}}</td>
+                        <td>{{row.3}}</td>
+                        <td>{{row.4}}</td>
+                        <td>{{row.5}}</td>
+                        <td>{{row.6}}</td>
+                        <td>{{row.7}}</td>
+                        <td>{{row.8}}</td>
+                        <td>{{row.9}}</td>
+                        <td>{{row.10}}</td>
+                        <td>{{row.11}}</td>
+                        <td>{{row.12}}</td>
+                        <td>{{row.13}}</td>
+                        <td>{{row.14}}</td>
+                        <td>{{row.15}}</td>
+                        <td>{{row.16}}</td>
+                        <td>{{row.17}}</td>
+                        <td>
+                            <a class="add" title="Add" data-toggle="tooltip" id="{{row.0}}"><i class="fa fa-user-plus"></i></a>
+                            <a class="edit" title="Edit" data-toggle="tooltip" id="{{row.0}}"><i class="fa fa-pencil"></i></a>
+                            <a class="delete" title="Delete" data-toggle="tooltip" id="{{row.0}}"><i class="fa fa-trash-o"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+    </div>
+</div>
+</body>
+</html>

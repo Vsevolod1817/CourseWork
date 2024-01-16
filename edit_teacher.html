@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Teacher</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+css
+Copy code
+    h1 {
+        font-size: 24px;
+    }
+
+    form {
+        margin-top: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input[type="text"] {
+        width: 200px;
+        padding: 5px;
+        margin-bottom: 10px;
+    }
+
+    button[type="submit"] {
+        padding: 8px 12px;
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+    <h1>Редактирование</h1>
+    <form method="POST" action="{{ url_for('edit_teacher', id=teacher.0) }}">
+        <label for="name">Имя:</label>
+        <input type="text" id="name" name="name" value="{{ teacher.1 }}" required>
+        <br>
+        <br>
+        <label for="department">Кафедра:</label>
+        <select id="department" name="department" required>
+            {% for department in departments %}
+            <option value="{{ department.0 }}" {% if teacher.iddepart == departments.id %}selected{% endif %}>{{ department.1 }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <br>
+        <label for="gender">Пол:</label>
+        <select id="gender" name="gender" required>
+            {% for gd in gender %}
+            <option value="{{ gd.0 }}" {% if teacher.gender == gender.id %}selected{% endif %}>{{ gd.1 }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <br>
+        <label for="br">Дата рождения:</label>
+        <input type="text" id="br" name="br" value="{{ teacher.4 }}" required>
+        <br>
+        <br>
+        <label for="zvanie">Звание:</label>
+        <select id="zvanie" name="zvanie" required>
+            {% for zv in zvanie %}
+            <option value="{{ zv.0 }}" {% if teacher.zvanie == zvanie.id %}selected{% endif %}>{{ zv.1 }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <br>
+        <label for="dol">Должность:</label>
+        <select id="dol" name="dol" required>
+            {% for dl in dol %}
+            <option value="{{ dl.0 }}" {% if teacher.dol == dol.id %}selected{% endif %}>{{ dl.1 }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <br>
+        <label for="pstag">Педагогический стаж:</label>
+        <input type="text" id="pstag" name="pstag" value="{{ teacher.7 }}" required>
+        <br>
+        <br>
+        <label for="ostag">Общий стаж:</label>
+        <input type="text" id="ostag" name="ostag" value="{{ teacher.8 }}" required>
+        <br>
+        <br>
+        <label for="number">Номер телефона:</label>
+        <input type="text" id="number" name="number" value="{{ teacher.9 }}" required>
+        <br>
+        <br>
+        <label for="email">Почта:</label>
+        <input type="text" id="email" name="email" value="{{ teacher.10 }}" required>
+        <br>
+        <br>
+        <label for="kolvo1">Количество человек в группе:</label>
+        <input type="text" id="kolvo1" name="kolvo1" value="{{ teacher.11 }}" required>
+        <br>
+        <br>
+        <label for="kolvo2">Количество групп:</label>
+        <input type="text" id="kolvo2" name="kolvo2" value="{{ teacher.12 }}" required>
+        <br>
+        <br>
+        <label for="podraz">Должность:</label>
+        <select id="podraz" name="podraz" required>
+            {% for pd in podraz %}
+            <option value="{{ pd.0 }}" {% if teacher.podraz == podraz.id %}selected{% endif %}>{{ pd.1 }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <br>
+        <label for="namepr">Название программы:</label>
+        <input type="text" id="namepr" name="namepr" value="{{ teacher.14 }}" required>
+        <br>
+        <br>
+        <label for="date2">Дата начала обучения:</label>
+        <input type="text" id="date2" name="date2" value="{{ teacher.15 }}" required>
+        <br>
+        <br>
+        <label for="date3">Дата окончания обучения:</label>
+        <input type="text" id="date3" name="date3" value="{{ teacher.16 }}" required>
+        <br>
+        <br>
+        <label for="raspis">Расписание:</label>
+        <input type="text" id="raspis" name="raspis" value="{{ teacher.17 }}" required>
+        <br>
+        <br>
+        <label for="kolvo3">Количество часов:</label>
+        <input type="text" id="kolvo3" name="kolvo3" value="{{ teacher.18 }}" required>
+        <br>
+        <br>
+        <label for="obraz">Образование:</label>
+        <input type="text" id="obraz" name="obraz" value="{{ teacher.19 }}" required>
+        <br>
+        <br>
+        <button type="submit">Обновить</button>
+    </form>
+</body>
+</html>
